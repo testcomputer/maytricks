@@ -1,0 +1,8 @@
+wordlists:
+  short: "/path/to/short_wordlist.txt"
+  medium: "/path/to/medium_wordlist.txt"
+  long: "/path/to/long_wordlist.txt"
+default_scan_options:
+  nmap: "-F"
+  nikto: "-h"
+  sqlmap: "--batch"
