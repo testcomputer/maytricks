@@ -1,6 +1,7 @@
 #!/usr/bin/env ruby
 require 'yaml'
-require 'curses'
+
+#Removes curses/Disable curses
 
 CONFIG = YAML.load_file('config.yml')
 
