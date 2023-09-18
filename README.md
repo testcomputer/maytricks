@@ -4,7 +4,8 @@
 
 Additional line of information text about what the project does. Your introduction should be around 2 or 3 sentences. Don't go overboard, people won't read it.
 
-## Prerequisites
+
+## Prerequisites <!-- edit then craft, not before -->
 
 Before you begin, ensure you have met the following requirements:
 <!--- These are just example requirements. Add, duplicate or remove as required --->
