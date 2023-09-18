@@ -1,8 +1,36 @@
+# General settings for the script
+general:
+  logging_level: "info"  # Options: debug, info, warn, error
+  output_directory: "/home/user/output"  # Directory to save any output or logs
+
+# Wordlist configurations
 wordlists:
+  # Paths to different wordlist sizes
   short: "/usr/share/dirbuster/short_wordlist.txt"
   medium: "/usr/share/dirbuster/medium_wordlist.txt"
   long: "/usr/share/dirbuster/long_wordlist.txt"
-default_scan_options:
-  nmap: "-F"
-  nikto: "-h"
-  sqlmap: "--batch"
+  go: "/usr/share/wordlists/dirb/common.txt"  # Default wordlist for GoBuster in Kali Linux
+
+# Tool-specific configurations
+tools:
+  # Default scan options for Nmap
+  nmap:
+    default_args: "-F"
+    path: "/usr/bin/nmap"
+
+  # Default scan options for Nikto
+  nikto:
+    default_args: "-h"
+    path: "/usr/bin/nikto"
+
+  # Default scan options for SQLMap
+  sqlmap:
+    default_args: "--batch"
+    path: "/usr/bin/sqlmap"
+
+  # Default scan options for GoBuster
+  gobuster:
+    default_args: "--wordlist=/usr/share/wordlists/dirb/common.txt"
+    path: "/usr/bin/gobuster"
+
+# Any other configurations can be added below
