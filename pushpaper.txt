@@ -1,6 +1,10 @@
+dev-transfer
 fished and synced
 
 Now once scyning is complete. edit rudy to scan networks, databases, files/folder, dir buster. 
 
 
 trigger pull request
+
+fished and synced
+
