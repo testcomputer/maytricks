@@ -1,5 +1,5 @@
 wordlists:
-  short: "/usr/share//dirbuster/short_wordlist.txt"
+  short: "/usr/share/dirbuster/short_wordlist.txt"
   medium: "/usr/share/dirbuster/medium_wordlist.txt"
   long: "/usr/share/dirbuster/long_wordlist.txt"
 default_scan_options:
