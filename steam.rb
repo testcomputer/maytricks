@@ -3,8 +3,7 @@ require 'yaml'
 require 'curses'
 require 'shoes'
 
-
-
+# Constants
 MAIN_MENU_ITEMS = [
   'Nmap',
   'Nikto',
@@ -22,6 +21,7 @@ SUB_MENU_ITEMS = {
 
 CONFIG = YAML.load_file('config.yml')
 
+# Initialize the screen for curses
 def init_screen
   Curses.init_screen
   Curses.start_color
@@ -31,6 +31,7 @@ def init_screen
   Curses.cbreak
 end
 
+# Create the main window for the menu
 def create_main_window
   height = MAIN_MENU_ITEMS.size + 4
   width = MAIN_MENU_ITEMS.map(&:length).max + 6
@@ -44,6 +45,7 @@ def create_main_window
   win
 end
 
+# Display the given menu items
 def display_menu(win, items)
   items.each_with_index do |item, index|
     win.setpos(3 + index, 4)
@@ -52,6 +54,7 @@ def display_menu(win, items)
   win.refresh
 end
 
+# Get user input from the menu
 def get_user_input(win)
   win.setpos(win.maxy - 1, 2)
   win.addstr("Your choice: ")
@@ -61,6 +64,7 @@ def get_user_input(win)
   choice
 end
 
+# Handle the main menu choice
 def handle_choice(choice, target_ip)
   case choice
   when 1..3
@@ -83,6 +87,7 @@ def handle_choice(choice, target_ip)
   end
 end
 
+# Display the sub-menu for a given tool
 def display_sub_menu(tool, target_ip)
   win = create_main_window
   win.setpos(1, 2)
@@ -92,6 +97,7 @@ def display_sub_menu(tool, target_ip)
   # Handle the sub-menu choice (you can add logic here to handle the specific scan types)
 end
 
+# Main execution
 def main
   init_screen
   win = create_main_window
