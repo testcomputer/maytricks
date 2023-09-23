@@ -52,11 +52,12 @@ end
 def get_user_input(win)
   win.setpos(MENU_ITEMS.size + 3, 2)
   win.addstr("Your choice: ")
-  win.echo
+  Curses.echo
   choice = win.getstr.to_i
-  win.noecho
+  Curses.noecho
   choice
 end
+
 
 # Handle the user's choice and execute the corresponding action.
 def handle_choice(choice, target_ip)
