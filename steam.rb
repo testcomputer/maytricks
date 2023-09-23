@@ -2,6 +2,7 @@
 require 'yaml'
 require 'curses'
 
+# Define the menu items that will be displayed to the user.
 MENU_ITEMS = [
   'Nmap',
   'Nikto',
@@ -11,8 +12,10 @@ MENU_ITEMS = [
   'Exit'
 ].freeze
 
+# Load configuration settings from an external YAML file.
 CONFIG = YAML.load_file('config.yml')
 
+# Initialize the screen for curses-based UI.
 def init_screen
   Curses.init_screen
   Curses.start_color
@@ -22,6 +25,7 @@ def init_screen
   Curses.cbreak
 end
 
+# Create the main window for displaying the menu.
 def create_main_window
   height = MENU_ITEMS.size + 4
   width = MENU_ITEMS.map(&:length).max + 6
@@ -35,6 +39,7 @@ def create_main_window
   win
 end
 
+# Display the menu items within the provided window.
 def display_menu(win)
   MENU_ITEMS.each_with_index do |item, index|
     win.setpos(3 + index, 4)
@@ -43,6 +48,7 @@ def display_menu(win)
   win.refresh
 end
 
+# Get the user's choice from the menu.
 def get_user_input(win)
   win.setpos(MENU_ITEMS.size + 3, 2)
   win.addstr("Your choice: ")
@@ -52,10 +58,11 @@ def get_user_input(win)
   choice
 end
 
+# Handle the user's choice and execute the corresponding action.
 def handle_choice(choice, target_ip)
   case choice
   when 1..5
-    # Handle tool choice
+    # Handle tool choice (this can be expanded to run the selected tool)
   when 6
     # Exit the program
     exit
@@ -65,6 +72,7 @@ def handle_choice(choice, target_ip)
   end
 end
 
+# Main execution flow of the program.
 def main
   init_screen
   win = create_main_window
@@ -79,4 +87,5 @@ ensure
   Curses.close_screen
 end
 
+# Start the program.
 main
