@@ -1,21 +1,27 @@
 #!/usr/bin/env ruby
 require 'yaml'
 require 'curses'
+require 'shoes'
 
-# Define the menu items that will be displayed to the user.
-MENU_ITEMS = [
+
+
+MAIN_MENU_ITEMS = [
   'Nmap',
   'Nikto',
-  'DirBuster (via Python)',
-  'GoBuster (via Lua)',
+  'GoBuster',
   'SQLMap',
   'Exit'
 ].freeze
 
-# Load configuration settings from an external YAML file.
+SUB_MENU_ITEMS = {
+  'Nmap' => ['Quick Scan', 'Full Scan'],
+  'Nikto' => ['Quick Scan', 'Full Scan'],
+  'GoBuster' => ['Directory Scan', 'File Scan'],
+  'SQLMap' => ['Provide Command List']
+}
+
 CONFIG = YAML.load_file('config.yml')
 
-# Initialize the screen for curses-based UI.
 def init_screen
   Curses.init_screen
   Curses.start_color
@@ -25,10 +31,9 @@ def init_screen
   Curses.cbreak
 end
 
-# Create the main window for displaying the menu.
 def create_main_window
-  height = MENU_ITEMS.size + 4
-  width = MENU_ITEMS.map(&:length).max + 6
+  height = MAIN_MENU_ITEMS.size + 4
+  width = MAIN_MENU_ITEMS.map(&:length).max + 6
   top = (Curses.lines - height) / 2
   left = (Curses.cols - width) / 2
   win = Curses::Window.new(height, width, top, left)
@@ -39,18 +44,16 @@ def create_main_window
   win
 end
 
-# Display the menu items within the provided window.
-def display_menu(win)
-  MENU_ITEMS.each_with_index do |item, index|
+def display_menu(win, items)
+  items.each_with_index do |item, index|
     win.setpos(3 + index, 4)
     win.addstr("#{index + 1}. #{item}")
   end
   win.refresh
 end
 
-# Get the user's choice from the menu.
 def get_user_input(win)
-  win.setpos(MENU_ITEMS.size + 3, 2)
+  win.setpos(win.maxy - 1, 2)
   win.addstr("Your choice: ")
   Curses.echo
   choice = win.getstr.to_i
@@ -58,28 +61,43 @@ def get_user_input(win)
   choice
 end
 
-
-# Handle the user's choice and execute the corresponding action.
 def handle_choice(choice, target_ip)
   case choice
-  when 1..5
-    # Handle tool choice (this can be expanded to run the selected tool)
-  when 6
+  when 1..3
+    tool = MAIN_MENU_ITEMS[choice - 1]
+    display_sub_menu(tool, target_ip)
+  when 4
+    # Prompt user for SQLMap command list
+    Curses.setpos(16, 2)
+    Curses.addstr("Provide a comma-separated list of SQLMap commands:")
+    Curses.echo
+    commands = Curses.getstr.split(',')
+    Curses.noecho
+    # Process the commands (you can add logic here to handle the commands)
+  when 5
     # Exit the program
     exit
   else
-    Curses.setpos(14, 2)
+    Curses.setpos(18, 2)
     Curses.addstr("Invalid choice. Please select a valid option.")
   end
 end
 
-# Main execution flow of the program.
+def display_sub_menu(tool, target_ip)
+  win = create_main_window
+  win.setpos(1, 2)
+  win.addstr("Select a scan type for #{tool}:")
+  display_menu(win, SUB_MENU_ITEMS[tool])
+  choice = get_user_input(win)
+  # Handle the sub-menu choice (you can add logic here to handle the specific scan types)
+end
+
 def main
   init_screen
   win = create_main_window
 
   loop do
-    display_menu(win)
+    display_menu(win, MAIN_MENU_ITEMS)
     choice = get_user_input(win)
     handle_choice(choice, "target_ip")  # Update with your target IP logic
   end
@@ -88,5 +106,4 @@ ensure
   Curses.close_screen
 end
 
-# Start the program.
 main
