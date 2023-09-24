@@ -57,6 +57,6 @@ class PenTestGUI(tk.Tk):
     def clear_results(self):
         self.results_text.delete(1.0, tk.END)
 
-if __FILE__ == "__main__":
+if __name__ == "__main__":
     app = PenTestGUI()
     app.mainloop()
