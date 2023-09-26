@@ -24,3 +24,6 @@ Shoes.app(title: "All-in-One Pentest Tool", width: 400, height: 300) do
     end
   end
 end
+
+
+# Edit notes
