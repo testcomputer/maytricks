@@ -2,6 +2,8 @@
 
 ## Not running currently
 
+Update current specs.
+
 Additional line of information text about what the project does. Your introduction should be around 2 or 3 sentences. Don't go overboard, people won't read it.
 
 
